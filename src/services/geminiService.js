@@ -7,15 +7,15 @@ class GeminiService {
   }
 
   criarPrompt(dados) {
-    const { 
-      genero, 
-      idade, 
-      area_graduacao, 
-      ano_conclusao, 
-      interesses, 
-      preferencia_ambiente, 
-      hard_skills, 
-      soft_skills 
+    const {
+      genero,
+      idade,
+      area_graduacao,
+      ano_conclusao,
+      interesses,
+      preferencia_ambiente,
+      hard_skills,
+      soft_skills
     } = dados;
 
     const prompt = `
@@ -36,6 +36,7 @@ Sua missão é:
 - Os campos \`title\`, \`introduction\` e \`inspirationalQuote\` devem conter **apenas uma entrada** cada.
 - Os campos \`roadmap\`, \`nextSteps\`, \`softSkills\`, \`potentialChallenges\` devem conter **quantos itens forem relevantes**, usando a criatividade. Não limite a 2.
 - No campo \`roadmap\`, **os dois primeiros itens devem ter \`"completed": true\`**, os demais podem ser \`false\`.
+- Nenhuma etapa do roadmap deve conter datas ou anos anteriores a junho de 2025. Use apenas datas futuras relativas ao contexto atual.
 
 RESPONSE FORMAT:
 {
@@ -88,9 +89,9 @@ RESPONSE FORMAT:
   async analisarCarreira(dados) {
     try {
       const prompt = this.criarPrompt(dados);
-      
+
       logger.info('Enviando prompt para Gemini...');
-      
+
       const result = await this.model.generateContent(prompt);
       const response = await result.response;
       const text = response.text();
@@ -110,7 +111,7 @@ RESPONSE FORMAT:
       } catch (parseError) {
         logger.error('Erro ao parsear JSON:', parseError);
         logger.info('Resposta original do Gemini:', text);
-        
+
         // Fallback: resposta estruturada manual com novo formato
         jsonResponse = this.criarRespostaFallback(dados);
       }
@@ -122,22 +123,22 @@ RESPONSE FORMAT:
 
     } catch (error) {
       logger.error('Erro no GeminiService:', error);
-      
+
       if (error.message.includes('API_KEY')) {
         throw new Error('Erro de autenticação com a API do Gemini');
       }
-      
+
       if (error.message.includes('quota')) {
         throw new Error('Limite de uso da API do Gemini atingido');
       }
-      
+
       throw new Error('Erro ao processar análise de carreira');
     }
   }
 
   criarRespostaFallback(dados) {
     const { area_graduacao, interesses } = dados;
-    
+
     return {
       title: `Carreira em ${area_graduacao}: Seu Caminho para o Sucesso`,
       introduction: `Com base no seu perfil e interesses em ${interesses}, identificamos um caminho promissor que combina suas habilidades técnicas com as demandas do mercado atual. Sua trajetória em ${area_graduacao} oferece excelentes oportunidades de crescimento e realização profissional.`,
