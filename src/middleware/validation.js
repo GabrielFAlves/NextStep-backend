@@ -2,11 +2,11 @@ const Joi = require('joi');
 
 const careerSchema = Joi.object({
   genero: Joi.string()
-    .valid('homem', 'mulher', 'não-binário', 'prefiro não informar')
+    .valid('masculino', 'feminino', 'outro', 'prefiro_nao_informar')
     .required()
     .messages({
       'any.required': 'Gênero é obrigatório',
-      'any.only': 'Gênero deve ser: homem, mulher, não-binário ou prefiro não informar'
+      'any.only': 'Gênero deve ser: masculino, feminino, outro ou prefiro_nao_informar'
     }),
   
   idade: Joi.number()
@@ -53,20 +53,37 @@ const careerSchema = Joi.object({
     }),
   
   preferencia_ambiente: Joi.string()
-    .min(5)
-    .max(300)
+    .valid(
+      'presencial e colaborativo',
+      'remoto e independente', 
+      'remoto e colaborativo',
+      'híbrido e flexível',
+      'presencial e individual'
+    )
     .required()
     .messages({
-      'string.min': 'Preferência de ambiente deve ter pelo menos 5 caracteres',
-      'string.max': 'Preferência de ambiente deve ter no máximo 300 caracteres',
-      'any.required': 'Preferência de ambiente é obrigatória'
+      'any.required': 'Preferência de ambiente é obrigatória',
+      'any.only': 'Preferência de ambiente deve ser uma das opções válidas'
     }),
 
-  is_tech_area: Joi.boolean()
+  hard_skills: Joi.string()
+    .min(3)
+    .max(1000)
     .required()
     .messages({
-      'boolean.base': 'is_tech_area deve ser true ou false',
-      'any.required': 'is_tech_area é obrigatório'
+      'string.min': 'Hard skills devem ter pelo menos 3 caracteres',
+      'string.max': 'Hard skills devem ter no máximo 1000 caracteres',
+      'any.required': 'Hard skills são obrigatórias'
+    }),
+
+  soft_skills: Joi.string()
+    .min(3)
+    .max(1000)
+    .required()
+    .messages({
+      'string.min': 'Soft skills devem ter pelo menos 3 caracteres',
+      'string.max': 'Soft skills devem ter no máximo 1000 caracteres',
+      'any.required': 'Soft skills são obrigatórias'
     })
 });
 
