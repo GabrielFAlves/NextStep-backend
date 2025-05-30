@@ -14,10 +14,7 @@ const corsOptions = {
     'http://localhost:3000',
     'http://localhost:3001',
     'http://localhost:5173',
-    'https://next-step-front.vercel.app/',
-    'https://next-step-front.vercel.app/form',
-    'https://next-step-front.vercel.app/tep'
-
+    'https://next-step-front.vercel.app'
   ],
   credentials: true
 };
