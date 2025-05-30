@@ -36,7 +36,7 @@ Sua missão é:
 - Os campos \`title\`, \`introduction\` e \`inspirationalQuote\` devem conter **apenas uma entrada** cada.
 - Os campos \`roadmap\`, \`nextSteps\`, \`softSkills\`, \`potentialChallenges\` devem conter **quantos itens forem relevantes**, usando a criatividade. Não limite a 2.
 - No campo \`roadmap\`, **os dois primeiros itens devem ter \`"completed": true\`**, os demais podem ser \`false\`.
-- Nenhuma etapa do roadmap deve conter datas ou anos anteriores a junho de 2025. Use apenas datas futuras relativas ao contexto atual.
+- Todas as etapas devem utilizar períodos relativos (ex: “0–3 meses”, “6–12 meses”) e não devem conter datas fixas ou anos absolutos. O plano precisa parecer atual e atemporal, independentemente da data de uso.
 
 RESPONSE FORMAT:
 {
